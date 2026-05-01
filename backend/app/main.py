@@ -13,8 +13,8 @@ from app.core.config import settings
 
 def build_allowed_origins() -> list[str]:
     origins = [origin.strip() for origin in settings.allowed_origins.split(",") if origin.strip()]
-    # Always allow localhost for development
-    localhost_origins = ["http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:5173", "http://127.0.0.1:3000"]
+    # Always allow localhost for development on any port.
+    localhost_origins = ["http://localhost", "http://127.0.0.1"]
     for lo in localhost_origins:
         if lo not in origins:
             origins.append(lo)
@@ -26,6 +26,7 @@ app = FastAPI(title="AI Interview Analyzer API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=build_allowed_origins(),
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?$|https://.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
