@@ -146,5 +146,3 @@ git filter-repo --path backend/.env --invert-paths
 ```
 
 After scrubbing history, force-push the cleaned branch to your remote and rotate any keys that were committed.
-
-"# Interview-Transcript-Analyzer-with-Structured-Insights" 
